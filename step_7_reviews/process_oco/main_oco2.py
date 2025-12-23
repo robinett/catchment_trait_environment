@@ -3,13 +3,10 @@ import datetime
 from process_oco2 import process_oco2
 
 def main():
-    ##### EDIT THESE #####
-    # where this script + outputs live
     base_dir = (
         '/discover/nobackup/trobinet/from_aws/'
         'pso/step_7_reviews'
     )
-    # input OCO2 data dir (your listing)
     oco2_dir = (
         '/discover/nobackup/trobinet/from_aws/pso/'
         'step_7_reviews/data/csif_raw/data'
@@ -57,7 +54,6 @@ def main():
     load_weights = False
     save_weights = True
     save_selected_truth = True
-    ##### END EDITS #####
 
     pro = process_oco2(base_dir)
     pro.get_tiles(catch_tiles_fname)

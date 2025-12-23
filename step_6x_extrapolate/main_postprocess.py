@@ -33,7 +33,6 @@ from plot_other import plot_other
 from plot_pixels import plot_pixels
 from analyze_timeseries_pixel_scale import analyze_pix
 
-<<<<<<< HEAD
 def paired_permutation_p(A, B, n_perm=100000, alternative="less", weights=None):
     A, B = np.asarray(A), np.asarray(B)
     m = np.isfinite(A) & np.isfinite(B)
@@ -54,8 +53,6 @@ def paired_permutation_p(A, B, n_perm=100000, alternative="less", weights=None):
         p = (np.sum(np.abs(perm) >= abs(obs)) + 1) / (n_perm + 1)
     return obs, p
 
-=======
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
 def main():
     # where are we?
     base_dir = '/discover/nobackup/trobinet/from_aws/pso/step_6x_extrapolate'
@@ -269,11 +266,8 @@ def main():
         0
     )
     g1_default = g1_default_df.loc['g1']
-<<<<<<< HEAD
     g1_diff_pft_default = g1_pft - g1_default
     g1_diff_ef_default = g1_ef - g1_default
-=======
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     # make plots of each and their difference
     #p_p = plot_pixels()
     #p_p.plot_map(
@@ -331,7 +325,6 @@ def main():
         cmap='rainbow'
     )
     # make the pdf for the different g1s
-<<<<<<< HEAD
     gen.add_to_gdf_and_save(
         '/discover/nobackup/trobinet/from_aws/pso/step_6x_extrapolate/outputs/' +
         'extrap_pixels.gdf',
@@ -358,8 +351,6 @@ def main():
         cmap='PiYG'
     )
     # make the pdf for the different g1s
-=======
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     p_o = plot_other()
     all_g1_vals = [
         g1_default,g1_pft,g1_ef
@@ -377,12 +368,9 @@ def main():
     ]
     line_widths = [1,1,1]
     fills = [False,False,False]
-<<<<<<< HEAD
     line_styles = [
         '-','-','-'
     ]
-=======
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     p_o.plot_pdf(
         all_g1_vals,
         all_g1_labels,
@@ -390,10 +378,7 @@ def main():
         kernel_widths,
         line_widths,
         fills,
-<<<<<<< HEAD
         line_styles,
-=======
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
         os.path.join(
             plots_dir,
             'g1_pdfs.svg'
@@ -430,15 +415,12 @@ def main():
         intersection_info_fname,precip_fname,canopy_fname,
         processed_pft_fname,get_watershed=False
     )
-<<<<<<< HEAD
     timeseries_info_drought = copy.deepcopy(timeseries_info)
     timeseries_info_drought = g.get_all_timeseries_info(
         timeseries_info_drought,start,end,pixels_fname,
         intersection_info_fname,precip_fname,canopy_fname,
         tile_pft_info_fname,get_watershed=False
     )
-=======
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     # get the le obs
     #print('getting le obs')
     le_obs = g.get_le_obs(le_truth_fname)
@@ -456,7 +438,6 @@ def main():
         print('getting error for experiment {}'.format(e))
         this_le_err_df = g_a.var_error(
             timeseries_info[exp]['pixel_raw_timeseries']['le'],
-<<<<<<< HEAD
             le_obs,start_err,end_err,var_type='daily'
         )
         timeseries_info[exp]['pixel_le_errors'] = this_le_err_df
@@ -465,41 +446,29 @@ def main():
             le_obs,start_err,end_err,during_drought=True,var_type='daily'
         )
         timeseries_info_drought[exp]['pixel_le_errors'] = this_le_err_df_drought
-=======
-            le_obs,start_err,end_err
-        )
-        timeseries_info[exp]['pixel_le_errors'] = this_le_err_df
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     print('getting j')
     # get ef j for le and strm
     le_j_ef = (
         timeseries_info[exps[2]]['pixel_le_errors'].loc['mae']/
         le_obs.mean()
     )
-<<<<<<< HEAD
     le_j_ef_drought = (
         timeseries_info_drought[exps[2]]['pixel_le_errors'].loc['mae']/
         le_obs.mean()
     )
-=======
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     # get  pft j for le and strm
     le_j_pft = (
         timeseries_info[exps[1]]['pixel_le_errors'].loc['mae']/
         le_obs.mean()
     )
-<<<<<<< HEAD
     le_j_pft_drought = (
         timeseries_info_drought[exps[1]]['pixel_le_errors'].loc['mae']/
         le_obs.mean()
     )
-=======
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     le_j_default = (
         timeseries_info[exps[0]]['pixel_le_errors'].loc['mae']/
         le_obs.mean()
     )
-<<<<<<< HEAD
     le_j_default_drought = (
         timeseries_info_drought[exps[0]]['pixel_le_errors'].loc['mae']/
         le_obs.mean()
@@ -563,20 +532,6 @@ def main():
     print(
         'p value of {}'.format(le_j_diff_pft_default_p_drought)
     )
-=======
-    overall_le_j_pft = np.nanmean(le_j_pft)
-    # get differences between j for EF and PFT
-    le_j_diff_ef_pft = le_j_ef - le_j_pft
-    le_j_ef_mean = le_j_ef.mean()
-    le_j_pft_mean = le_j_pft.mean()
-    perc_le_j_diff_ef_pft = (
-        (le_j_ef_mean - le_j_pft_mean)/le_j_pft_mean
-    )
-    perc_le_j_diff_ef_pft = perc_le_j_diff_ef_pft*-100
-    print(
-        'ef is better than pft for extrap by {}%'.format(perc_le_j_diff_ef_pft)
-    )
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     # get differences between j for EF and default
     le_j_diff_ef_default = le_j_ef - le_j_default
     le_j_ef_mean = le_j_ef.mean()
@@ -585,7 +540,6 @@ def main():
         (le_j_ef_mean - le_j_default_mean)/le_j_default_mean
     )
     perc_le_j_diff_ef_default = perc_le_j_diff_ef_default*-100
-<<<<<<< HEAD
     mask = np.isfinite(le_j_ef) & np.isfinite(le_j_default)
     _, le_j_diff_ef_default_p = paired_permutation_p(
         le_j_ef[mask],
@@ -617,11 +571,6 @@ def main():
     print(
         'p value of {}'.format(le_j_diff_ef_default_p_drought)
     )
-=======
-    print(
-        'ef is better than default for extrap by {}%'.format(perc_le_j_diff_ef_default)
-    )
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     #p_p = plot_pixels()
     #p_p.plot_map(
     #    'le_j_pft_extrap',
@@ -675,7 +624,6 @@ def main():
         vmax=0.5,
         cmap='PiYG'
     )
-<<<<<<< HEAD
     gen.add_to_gdf_and_save(
         '/discover/nobackup/trobinet/from_aws/pso/step_6x_extrapolate/outputs/' +
         'extrap_pixels.gdf',
@@ -743,8 +691,6 @@ def main():
         cmap='PiYG'
     )
     sys.exit()
-=======
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     # let's check by land cover just to see what happens
     # lets start by getting our pft info
     # make a df where each column is a tile and the row is the pft %

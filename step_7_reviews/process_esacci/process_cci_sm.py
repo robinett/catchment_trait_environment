@@ -7,17 +7,14 @@ import datetime
 import copy
 import pickle
 
-# Compile once: filenames contain "...-YYYYMMDDhhmmss-..."
-_FNAME_DT_RE = re.compile(r'(\d{8})\d{6}')  # capture YYYYMMDD, ignore hhmmss
+_FNAME_DT_RE = re.compile(r'(\d{8})\d{6}')
 
 
 class process_cci_sm:
     def __init__(self, base_dir):
         self.base_dir = base_dir
 
-    # -------------------------
     # Tile / grid setup
-    # -------------------------
     def get_tiles(self, tiles_fname):
         tiles = pd.read_csv(tiles_fname, header=None)
         tiles = np.array(tiles).astype(int).T[0]
@@ -25,7 +22,6 @@ class process_cci_sm:
         self.tiles_idx = tiles - 1
 
     def _latlon_from_example(self, example_cci_sm_fname):
-        # Open one file to get centers & bounds (regular 0.25° grid)
         ds = nc.Dataset(example_cci_sm_fname)
         lon = np.array(ds['lon'])
         lat = np.array(ds['lat'])
@@ -213,10 +209,6 @@ class process_cci_sm:
         return None
 
     def _index_files_by_date(self, root_dir, start, end, progress_every=2000):
-        """
-        Build {date -> [paths]} ONLY for dates within [start, end].
-        Uses filename parsing; tiny fallback read if needed.
-        """
         by_date = {}
         scanned = 0
         kept = 0
@@ -245,9 +237,7 @@ class process_cci_sm:
         print(f'Indexed {kept:,} files across {len(by_date):,} unique dates.')
         return by_date
 
-    # -------------------------
     # Data read / processing
-    # -------------------------
     def _read_sm_slice(self, path):
         """Return 2D sm (lat,lon) as float with NaNs applied, else None."""
         try:
@@ -264,9 +254,7 @@ class process_cci_sm:
         except Exception:
             return None
 
-    # -------------------------
     # Main producer
-    # -------------------------
     def create_truth_cci_sm(
         self,
         start,
@@ -276,10 +264,9 @@ class process_cci_sm:
         truth_fname_selected_tiles
     ):
         """
-        Build DAILY regridded CCI ACTIVE SM (%) at your catchment tiles.
+        Build DAILY regridded CCI ACTIVE SM (%) at catchment tiles.
         For each calendar date in [start, end], if files exist for that
-        day we average them; else NaNs. Mirrors your OCO2 daily loop with
-        the same progress print per day.
+        day we average them; else NaNs.
         """
         weights = self.ccism_to_catch
 
@@ -292,14 +279,12 @@ class process_cci_sm:
         truth_df_selected = None
 
         while curr <= end:
-            # progress print to mirror your OCO2 create_truth_oco2
             print(f'start: {start}, end: {end}, curr: {curr}')
 
             # prepare one row (selected tiles only)
             day_vals = np.repeat(np.nan, len(self.tiles))
 
             if curr in by_date:
-                # Multiple files for the same day → average across files
                 per_file_tile = []
 
                 for fpath in by_date[curr]:

@@ -3,8 +3,6 @@ import datetime
 from process_cci_sm import process_cci_sm
 
 def main():
-    ##### EDIT THESE #####
-    # where this script + outputs live (mirrors your updated OCO2 main)
     base_dir = (
         '/discover/nobackup/trobinet/from_aws/'
         'pso/step_7_reviews'
@@ -18,7 +16,6 @@ def main():
     output_dir = os.path.join(base_dir, 'outputs')
     os.makedirs(output_dir, exist_ok=True)
 
-    # catchment tiles & geometry (match your new paths)
     catch_tiles_fname = (
         '/discover/nobackup/trobinet/from_aws/pso/'
         'step_1x_choose_tiles_large/outputs/intersecting_catch_tiles.csv'
@@ -32,7 +29,6 @@ def main():
     start_date = datetime.date(1991, 10, 1)
     end_date   = datetime.date(2014, 12, 31)
 
-    # example file to read grid geometry (0.25°)
     example_cci_sm_fname = (
         '/discover/nobackup/trobinet/from_aws/pso/'
         'step_7_reviews/data/sm_raw/data/1991/'
@@ -50,11 +46,9 @@ def main():
         '{start}_{end}_extrapolation_tiles.csv'
     )
 
-    # toggles (mirror your OCO2 main)
     load_weights = True
     save_weights = True
     save_selected_truth = True
-    ##### END EDITS #####
 
     pro = process_cci_sm(base_dir)
     pro.get_tiles(catch_tiles_fname)

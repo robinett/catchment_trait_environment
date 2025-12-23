@@ -14,9 +14,7 @@ class process_spei:
         self.spei_to_catch = None    # weights dict
         self.grid_meta = None        # lat/lon centers and edges
 
-    # -------------------------
     # Tile / grid setup
-    # -------------------------
     def get_tiles(self, tiles_fname):
         """
         Load the intersecting tile list. These are the tiles that
@@ -60,9 +58,6 @@ class process_spei:
         in_left  = np.where(low_edges  < box[1])[0]
         return np.intersect1d(in_right, in_left).tolist()
 
-    # -------------------------
-    # Weights (SPEI -> tile boxes)
-    # -------------------------
     def get_weights(
         self,
         catch_tile_info_fname,
@@ -254,9 +249,7 @@ class process_spei:
             "catch_right": lon_box[1],
         }
 
-    # -------------------------
     # NetCDF helpers
-    # -------------------------
     @staticmethod
     def _apply_scale_and_mask(var_obj, arr2d):
         """
@@ -347,7 +340,6 @@ class process_spei:
                 calendar=getattr(time_var, "calendar", "gregorian"),
             )
 
-            # Map (year, month) -> index in NetCDF
             ym_to_k = {}
             for ti, tdt in enumerate(times):
                 ym_to_k[(tdt.year, tdt.month)] = ti
@@ -383,7 +375,6 @@ class process_spei:
                         wts = entry["weights"]
 
                         if (wts is None) or (len(wts) == 0):
-                            # No overlap → NaN
                             continue
 
                         vals = np.zeros(len(wts))

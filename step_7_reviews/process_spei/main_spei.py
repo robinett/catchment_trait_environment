@@ -4,7 +4,6 @@ from process_spei import process_spei
 
 
 def main():
-    # --------- EDIT THESE PATHS ---------
     base_dir = (
         "/discover/nobackup/trobinet/from_aws/"
         "pso/step_7_reviews"
@@ -55,8 +54,6 @@ def main():
     # Only these tiles will be enforced as columns in outputs
     pro.get_tiles(intersecting_tiles_fname)
 
-    # Build/Load weights ONLY for those tiles; tiles with no overlap
-    # will still be present with empty intersections.
     pro.get_weights(
         catch_tile_info_fname=catch_tile_info_fname,
         load_weights=load_weights,

@@ -20,10 +20,8 @@ from plot_other import plot_other
 from general_functions import gen_funcs
 from plot_pixels import plot_pixels
 from plot_timeseries import timeseries
-<<<<<<< HEAD
 from scipy.stats import wilcoxon
 import xarray as xr
-import numpy as np
 
 def paired_permutation_p(A, B, n_perm=100000, alternative="less", weights=None):
     A, B = np.asarray(A), np.asarray(B)
@@ -44,9 +42,6 @@ def paired_permutation_p(A, B, n_perm=100000, alternative="less", weights=None):
     else:  # two-sided
         p = (np.sum(np.abs(perm) >= abs(obs)) + 1) / (n_perm + 1)
     return obs, p
-
-=======
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
 
 def main():
     # what is the base dir?
@@ -88,7 +83,6 @@ def main():
         '/discover/nobackup/trobinet/from_aws/pso/step_3.1.1x_process_camels/outputs/' +
         'camels_truth_yearly_1995-01-01_2014-12-31_mm_day.csv'
     )
-<<<<<<< HEAD
     sm_truth_fname = (
         '/discover/nobackup/trobinet/from_aws/pso/step_7_reviews/outputs/' +
         'sm_truth_cci_active_pct_1991-10-01_2014-12-31.csv'
@@ -97,8 +91,6 @@ def main():
         '/discover/nobackup/trobinet/from_aws/pso/step_7_reviews/outputs/' +
         'sif_truth_oco2_all_daily_2001-01-01_2014-12-31.csv'
     )
-=======
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     # where is the tile info?
     tile_pft_info_fname = (
         '/discover/nobackup/trobinet/from_aws/pso/step_5_analyze_outputs/outputs/pft_distribution.csv'
@@ -113,13 +105,10 @@ def main():
         '/discover/nobackup/trobinet/from_aws/pso/step_2x_env_covariates/outputs/' +
         'canopy_height_normalized.nc4'
     )
-<<<<<<< HEAD
     canopy_nonorm_fname = (
         '/discover/nobackup/trobinet/from_aws/pso/step_2x_env_covariates/outputs/' +
         'canopy_height.nc4'
     )
-=======
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     # give me an example restart file (so we can get wetness at wilting point)
     restart_fname = (
         '/lustre/catchment/exps/GEOSldas_CN45_pso_g1_a0_a1_et_strm_' +
@@ -139,17 +128,10 @@ def main():
     timeseries_info = {
         'med-default-pft-g1-1992-2014':{
             'dir':(
-<<<<<<< HEAD
                 '/discover/nobackup/trobinet/from_aws/exps/GEOSldas_CN45_med_default_pft_g1_1992_2014_camels/0'
             ),
             'load_or_save':'load',
             'default_type':'default',
-=======
-                'nan'
-            ),
-            'load_or_save':'load',
-            'default_type':'nan',
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
             'read_met_forcing':True,
             'timeseries_dir':os.path.join(
                 save_dir,
@@ -204,7 +186,6 @@ def main():
         'a0_c4_grass':[[1.6]],
         'a0_crop':[[5.79]]
     }
-<<<<<<< HEAD
     # just plot the canopy height and precip to get started
     p_p = plot_pixels()
     gen = gen_funcs()
@@ -254,16 +235,11 @@ def main():
     sys.exit()
 
     # let's get the le truth timeseries
-=======
-    # let's get the le truth timeseries
-    gen = gen_funcs()
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     g = get_timeseries()
     le_obs = g.get_le_obs(le_truth_fname)
     # let's get the streamflow truth timeseries
     strm_obs = g.get_streamflow_obs(streamflow_truth_fname)
     strm_obs_mean = strm_obs.mean()
-<<<<<<< HEAD
     # sm truth
     sm_obs = pd.read_csv(sm_truth_fname)
     sm_obs['time'] = pd.to_datetime(sm_obs['time'])
@@ -277,10 +253,6 @@ def main():
     # make all the column names strings
     sif_obs.columns = [int(col) for col in sif_obs.columns]
     # and why not pixels while we are at it
-=======
-    # and why not pixels while we are at it
-    pixels = gen.get_pixels(pixels_fname)
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     # and the intersection info
     intersection_info = gen.get_intersection_info(
         intersection_info_fname
@@ -292,7 +264,6 @@ def main():
         intersection_info_fname,precip_fname,canopy_fname,
         tile_pft_info_fname
     )
-<<<<<<< HEAD
     timeseries_info_drought = g.get_all_timeseries_info(
         timeseries_info,start,end,pixels_fname,
         intersection_info_fname,precip_fname,canopy_fname,
@@ -312,12 +283,6 @@ def main():
     )
     print(timeseries_info[exps[2]]['pixel_le_errors'])
     #print(timeseries_info_drought[exps[2]]['pixel_le_errors'])
-=======
-    g_a = averages_and_error()
-    timeseries_info = g_a.get_all_averages_and_error(
-        timeseries_info,le_obs,strm_obs,start_err,end_err
-    )
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     # get ef j for le and strm
     le_j_ef = (
         timeseries_info[exps[2]]['pixel_le_errors'].loc['mae']/
@@ -327,7 +292,6 @@ def main():
         timeseries_info[exps[2]]['wat_strm_errors'].loc['mae']/
         strm_obs.mean()
     )
-<<<<<<< HEAD
     le_j_ef_drought = (
         timeseries_info_drought[exps[2]]['pixel_le_errors'].loc['mae']/
         le_obs.mean()
@@ -336,9 +300,6 @@ def main():
         timeseries_info_drought[exps[2]]['wat_strm_errors'].loc['mae']/
         strm_obs.mean()
     )
-    
-=======
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     # get  pft j for le and strm
     le_j_pft = (
         timeseries_info[exps[1]]['pixel_le_errors'].loc['mae']/
@@ -350,7 +311,6 @@ def main():
         strm_obs.mean()
     )
     overall_strm_j_pft = np.nanmean(strm_j_pft)
-<<<<<<< HEAD
     le_j_pft_drought = (
         timeseries_info_drought[exps[1]]['pixel_le_errors'].loc['mae']/
         le_obs.mean()
@@ -361,8 +321,6 @@ def main():
         strm_obs.mean()
     )
     overall_strm_j_pft_drought = np.nanmean(strm_j_pft_drought)
-=======
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     # also get jLE at the watershed scale
     le_j_pft_df = pd.DataFrame(columns=pixels)
     le_j_pft_df.loc['le_j_pft'] = le_j_pft
@@ -371,7 +329,6 @@ def main():
         intersection_info
     )
     le_j_wat_pft = le_j_wat_pft_df.loc['le_j_pft']
-<<<<<<< HEAD
     le_j_ef_df = pd.DataFrame(columns=pixels)
     le_j_ef_df.loc['le_j_ef'] = le_j_ef
     le_j_wat_ef_df = gen.pix_df_to_wat_df(
@@ -379,8 +336,6 @@ def main():
         intersection_info
     )
     le_j_wat_ef = le_j_wat_ef_df.loc['le_j_ef']
-=======
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     # get default j for le and strm
     le_j_def = (
         timeseries_info[exps[0]]['pixel_le_errors'].loc['mae']/
@@ -390,7 +345,6 @@ def main():
         timeseries_info[exps[0]]['wat_strm_errors'].loc['mae']/
         strm_obs.mean()
     )
-<<<<<<< HEAD
     le_j_def_drought = (
         timeseries_info_drought[exps[0]]['pixel_le_errors'].loc['mae']/
         le_obs.mean()
@@ -399,15 +353,12 @@ def main():
         timeseries_info_drought[exps[0]]['wat_strm_errors'].loc['mae']/
         strm_obs.mean()
     )
-=======
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     # get differences between j for EF and PFT
     watersheds = np.array(strm_j_pft.index)
     le_j_diff_ef_pft = le_j_ef - le_j_pft
     strm_j_diff_ef_pft = strm_j_ef - strm_j_pft
     le_j_diff_ef_def = le_j_ef - le_j_def
     strm_j_diff_ef_def = strm_j_ef - strm_j_def
-<<<<<<< HEAD
     le_j_diff_pft_def = le_j_pft - le_j_def
     strm_j_diff_pft_def = strm_j_pft - strm_j_def
     le_j_diff_ef_pft_drought = le_j_ef_drought - le_j_pft_drought
@@ -477,8 +428,6 @@ def main():
         strm_j_def_drought[mask],
         alternative='less'
     )
-=======
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     # let's convert le j diff to the watershed scale
     le_j_diff_ef_pft_df = pd.DataFrame(columns=pixels)
     le_j_diff_ef_pft_df.loc['le_j_diff'] = le_j_diff_ef_pft
@@ -500,7 +449,6 @@ def main():
     strm_perc_imp = strm_j_diff_ef_pft.mean()/strm_j_pft.mean()*-100
     le_perc_imp_def = le_j_diff_ef_def.mean()/le_j_def.mean()*-100
     strm_perc_imp_def = strm_j_diff_ef_def.mean()/strm_j_def.mean()*-100
-<<<<<<< HEAD
     le_perc_imp_drought = le_j_diff_ef_pft_drought.mean()/le_j_pft_drought.mean()*-100
     strm_perc_imp_drought = strm_j_diff_ef_pft_drought.mean()/strm_j_pft_drought.mean()*-100
     le_perc_imp_def_drought = le_j_diff_ef_def_drought.mean()/le_j_def_drought.mean()*-100
@@ -525,13 +473,10 @@ def main():
         timeseries_info[exps[2]]['pixel_sif_errors'].loc['corr'] -
         timeseries_info[exps[0]]['pixel_sif_errors'].loc['corr']
     )
-=======
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     print(
         'EF improved LE by {}%'.format(le_perc_imp)
     )
     print(
-<<<<<<< HEAD
         'p value of {}'.format(le_j_diff_ef_pft_p)
     )
     print(
@@ -649,37 +594,23 @@ def main():
     strm_perc_imp_pft_def = strm_j_diff_pft_def.mean()/strm_j_def.mean()*-100
     le_perc_imp_pft_def_drought = le_j_diff_pft_def_drought.mean()/le_j_def_drought.mean()*-100
     strm_perc_imp_pft_def_drought = strm_j_diff_pft_def_drought.mean()/strm_j_def_drought.mean()*-100
-=======
-        'EF improved strm by {}%'.format(strm_perc_imp)
-    )
-    print(
-        'EF improved LE for default by {}%'.format(le_perc_imp_def)
-    )
-    print(
-        'EF improved strm for default by {}%'.format(strm_perc_imp_def)
-    )
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     tot_j_def = le_j_def.mean() + strm_j_def.mean()
     tot_j_pft = le_j_pft.mean() + strm_j_pft.mean()
     tot_j_ef = le_j_ef.mean() + strm_j_ef.mean()
     tot_perc_imp = (tot_j_ef - tot_j_pft)/tot_j_pft*-100
     tot_perc_imp_def = (tot_j_ef - tot_j_def)/tot_j_def*-100
-<<<<<<< HEAD
     tot_j_def_drought = le_j_def_drought.mean() + strm_j_def_drought.mean()
     tot_j_pft_drought = le_j_pft_drought.mean() + strm_j_pft_drought.mean()
     tot_j_ef_drought = le_j_ef_drought.mean() + strm_j_ef_drought.mean()
     tot_perc_imp_drought = (tot_j_ef_drought - tot_j_pft_drought)/tot_j_pft_drought*-100
     tot_perc_imp_def_drought = (tot_j_ef_drought - tot_j_def_drought)/tot_j_def_drought*-100
     tot_perc_imp_pft_def_drought = (tot_j_pft_drought - tot_j_def_drought)/tot_j_def_drought*-100
-=======
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     print(
         'EF improved TOT by {}%'.format(tot_perc_imp)
     )
     print(
         'EF improved TOT for def by {}%'.format(tot_perc_imp_def)
     )
-<<<<<<< HEAD
     print(
         'EF improved TOT during drought by {}%'.format(tot_perc_imp_drought)
     )
@@ -689,8 +620,6 @@ def main():
     print(
         'PFT improved TOT for def during drought by {}%'.format(tot_perc_imp_pft_def_drought)
     )
-=======
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     # let's make figure 2a: PFT-based g1 vs. EF-based g1
     # first let's get the g1 information
     g1_pft_df = timeseries_info[exps[1]]['g1_map']
@@ -711,13 +640,10 @@ def main():
     g1_default = g1_default_df.loc['g1']
     g1_diff_ef_pft_df = g1_ef_df - g1_pft_df
     g1_diff_ef_pft = g1_diff_ef_pft_df.loc['g1']
-<<<<<<< HEAD
     g1_diff_ef_default_df = g1_ef_df - g1_default_df
     g1_diff_ef_default = g1_diff_ef_default_df.loc['g1']
     g1_diff_pft_default_df = g1_pft_df - g1_default_df
     g1_diff_pft_default = g1_diff_pft_default_df.loc['g1']
-=======
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     # convert g1 difference to the watershed scale
     g1_wat_pft_df = gen.pix_df_to_wat_df(
         g1_pft_df,intersection_info
@@ -729,11 +655,7 @@ def main():
     g1_wat_ef = g1_wat_ef_df.loc['g1']
     g1_wat_diff_ef_pft_df = g1_wat_ef_df - g1_wat_pft_df
     g1_wat_diff_ef_pft = g1_wat_ef - g1_wat_pft
-<<<<<<< HEAD
     # this is a neutral point, so let's make it 
-=======
-    # this is a neutral point, so let's make it purple
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     all_purple = ['#8441B3' for i in range(len(pixels))]
     all_purple_wat = ['#8441B3' for i in range(len(watersheds))]
     # okay let's make the plot
@@ -751,10 +673,6 @@ def main():
     )
     # now we need to save the gdf's so that they can be put into qgis to make
     # some pretty maps
-<<<<<<< HEAD
-=======
-    p_p = plot_pixels()
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     p_p.plot_map(
         'g1_default',
         pixels,
@@ -782,7 +700,6 @@ def main():
         vmin=0.5,
         vmax=7
     )
-<<<<<<< HEAD
     p_p.plot_map(
         'g1_diff_ef_default',
         pixels,
@@ -803,8 +720,6 @@ def main():
         vmin=-5,
         vmax=5
     )
-=======
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     gen.add_to_gdf_and_save(
         '/discover/nobackup/trobinet/from_aws/pso/step_1x_choose_tiles_large/outputs/' +
         'really_chosen_tiles.geojson',
@@ -841,7 +756,6 @@ def main():
         vmax=7,
         cmap='rainbow'
     )
-<<<<<<< HEAD
     gen.add_to_gdf_and_save(
         '/discover/nobackup/trobinet/from_aws/pso/step_1x_choose_tiles_large/outputs/' +
         'really_chosen_tiles.geojson',
@@ -914,8 +828,6 @@ def main():
         vmax=0.15,
         cmap='PiYG'
     )
-=======
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     # make the pdf for the different g1s
     all_g1_vals = [
         g1_default,g1_pft,g1_ef
@@ -931,12 +843,9 @@ def main():
     kernel_widths = [
         1,1,1
     ]
-<<<<<<< HEAD
     line_styles = [
         '-','-','-'
     ]
-=======
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     line_widths = [1,1,1]
     fills = [False,False,False]
     p_o.plot_pdf(
@@ -946,10 +855,7 @@ def main():
         kernel_widths,
         line_widths,
         fills,
-<<<<<<< HEAD
         line_styles,
-=======
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
         os.path.join(
             plots_dir,
             'g1_pdfs.svg'
@@ -957,7 +863,6 @@ def main():
         xlim=[0,8],
         min_val=[0.5]
     )
-<<<<<<< HEAD
     # get changes in average le
     le_default = timeseries_info[exps[0]]['pixel_avgs'].loc['le']
     et_default = le_default/28.94
@@ -1060,8 +965,6 @@ def main():
     #    plots_dir,
     #    cmap='PiYG'
     #)
-=======
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     # alright perfect, now we need to make the figure 3 histograms
     # we need to get the information by PFT
     tile_pft_info = pd.read_csv(tile_pft_info_fname)
@@ -1471,10 +1374,7 @@ def main():
             [0.5],
             [3],
             [True],
-<<<<<<< HEAD
             ['-'],
-=======
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
             save_name.format(pft),
             vert_lines=[
                 this_ef_g1_median,this_pft_g1_avg,
@@ -1514,7 +1414,6 @@ def main():
     PiYG_grey = LinearSegmentedColormap.from_list('PiYG_grey',colors)
 
     p_p.plot_map(
-<<<<<<< HEAD
         'le_perc',pixels,le_perc,
         np.nanmean(le_perc),plots_dir,
         vmin=-50,vmax=50,cmap='PiYG'
@@ -1524,13 +1423,6 @@ def main():
         np.nanmean(le_perc_drought),plots_dir,
         vmin=-50,vmax=50,cmap='PiYG'
     )
-=======
-        'le_j_diff_ef_pft',pixels,le_j_diff_ef_pft*-1,
-        np.nanmean(le_j_diff_ef_pft*-1),plots_dir,
-        vmin=-0.5,vmax=0.5,cmap='PiYG'
-    )
-    #p_w = plot_wat()
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     #p_w.plot_map(
     #    'strm_j_diff_ef_pft',watersheds,np.array(strm_j_diff_ef_pft)*-1,
     #    np.nanmean(np.array(strm_j_diff_ef_pft)*-1),plots_dir,
@@ -1541,7 +1433,6 @@ def main():
         'really_chosen_tiles.geojson',
         os.path.join(
             out_dir,
-<<<<<<< HEAD
             'le_j_diff_ef_pft_perc.gpkg'
         ),
         le_perc,
@@ -1595,18 +1486,12 @@ def main():
             'le_j_diff_ef_pft_drought.gpkg'
         ),
         le_j_diff_ef_pft_drought*-1,
-=======
-            'le_j_diff_ef_pft.gpkg'
-        ),
-        le_j_diff_ef_pft*-1,
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
         vmin=-0.5,
         vmax=0.5,
         cmap='PiYG'
     )
     gen.add_to_gdf_and_save(
         '/discover/nobackup/trobinet/from_aws/pso/step_1x_choose_tiles_large/outputs/' +
-<<<<<<< HEAD
         'really_chosen_tiles.geojson',
         os.path.join(
             out_dir,
@@ -1625,14 +1510,6 @@ def main():
             'strm_j_diff_ef_pft_drought.gpkg'
         ),
         strm_j_diff_ef_pft_drought*-1,
-=======
-        'chosen_camels.geojson',
-        os.path.join(
-            out_dir,
-            'strm_j_diff_ef_pft.gpkg'
-        ),
-        strm_j_diff_ef_pft*-1,
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
         vmin=-0.5,
         vmax=0.5,
         cmap='PiYG',
@@ -1640,7 +1517,6 @@ def main():
     )
     gen.add_to_gdf_and_save(
         '/discover/nobackup/trobinet/from_aws/pso/step_1x_choose_tiles_large/outputs/' +
-<<<<<<< HEAD
         'chosen_camels.geojson',
         os.path.join(
             out_dir,
@@ -1649,28 +1525,6 @@ def main():
         strm_j_diff_ef_def_drought*-1,
         vmin=-0.50,
         vmax=0.50,
-=======
-        'really_chosen_tiles.geojson',
-        os.path.join(
-            out_dir,
-            'le_j_diff_ef_def.gpkg'
-        ),
-        le_j_diff_ef_def*-1,
-        vmin=-0.5,
-        vmax=0.5,
-        cmap='PiYG'
-    )
-    gen.add_to_gdf_and_save(
-        '/discover/nobackup/trobinet/from_aws/pso/step_1x_choose_tiles_large/outputs/' +
-        'chosen_camels.geojson',
-        os.path.join(
-            out_dir,
-            'strm_j_diff_ef_def.gpkg'
-        ),
-        strm_j_diff_ef_def*-1,
-        vmin=-0.5,
-        vmax=0.5,
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
         cmap='PiYG',
         subselection=watersheds
     )
@@ -1683,16 +1537,10 @@ def main():
         'Jstrm PFT - Jstrm EF',
         'JET wat PFT - JET wat EF',
         xlim=[-0.9,0.9],
-<<<<<<< HEAD
         ylim=[-0.4,0.4],
         color=all_purple_wat,
         quadrant_lines=True,
         one_to_one_line=True
-=======
-        ylim=[-0.9,0.9],
-        color=all_purple_wat,
-        quadrant_lines=True
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     )
     p_o.scatter(
         strm_j_diff_ef_def*-1,
@@ -1702,16 +1550,10 @@ def main():
         'Jstrm PFT - Jstrm EF',
         'JET wat PFT - JET wat EF',
         xlim=[-0.9,0.9],
-<<<<<<< HEAD
         ylim=[-0.4,0.4],
         color=all_purple_wat,
         quadrant_lines=True,
         one_to_one_line=True
-=======
-        ylim=[-0.9,0.9],
-        color=all_purple_wat,
-        quadrant_lines=True
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     )
     # let's get the Jstrm and JET for the 6 highest performing basins
     sorted_vals = strm_j_diff_ef_pft.sort_values().head(6)
@@ -1719,7 +1561,6 @@ def main():
     strm_j_diff_ef_pft_big = strm_j_diff_ef_pft.loc[sorted_idx]
     strm_j_pft_big = strm_j_pft.loc[sorted_idx]
     le_j_wat_pft_big = le_j_wat_pft.loc[sorted_idx]
-<<<<<<< HEAD
     strm_j_ef_big = strm_j_ef.loc[sorted_idx]
     le_j_wat_ef_big = le_j_wat_ef.loc[sorted_idx]
     le_j_wat_diff_ef_pft_big = le_j_wat_diff_ef_pft.loc[sorted_idx]
@@ -1737,16 +1578,10 @@ def main():
         strm_j_pft_big[mask],
         alternative='less'
     )
-=======
-    le_j_wat_diff_ef_pft_big = le_j_wat_diff_ef_pft.loc[sorted_idx]
-    strm_perc_imp_big = strm_j_diff_ef_pft_big.mean()/strm_j_pft_big.mean()*-100
-    le_perc_imp_big = le_j_wat_diff_ef_pft_big.mean()/le_j_wat_pft_big.mean()*-100
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     print(
         'Jstrm improvement in big basins is {}%'.format(strm_perc_imp_big)
     )
     print(
-<<<<<<< HEAD
         'p value of {}'.format(strm_j_diff_ef_pft_big_p)
     )
     print(
@@ -1755,16 +1590,11 @@ def main():
     print(
         'p value of {}'.format(le_j_diff_ef_pft_big_p)
     )
-=======
-        'JLE improvement in big basins is {}%'.format(le_perc_imp_big)
-    )
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     # and then for the rest of the basins
     strm_j_diff_ef_pft_small = strm_j_diff_ef_pft.drop(sorted_idx)
     strm_j_pft_small = strm_j_pft.drop(sorted_idx)
     le_j_wat_diff_ef_pft_small = le_j_wat_diff_ef_pft.drop(sorted_idx)
     le_j_wat_pft_small = le_j_wat_pft.drop(sorted_idx)
-<<<<<<< HEAD
     strm_j_ef_small = strm_j_ef.drop(sorted_idx)
     le_j_wat_ef_small = le_j_wat_ef.drop(sorted_idx)
     strm_perc_imp_small = strm_j_diff_ef_pft_small.mean()/strm_j_pft_small.mean()*-100
@@ -1781,15 +1611,10 @@ def main():
         strm_j_pft_small[mask],
         alternative='greater'
     )
-=======
-    strm_perc_imp_small = strm_j_diff_ef_pft_small.mean()/strm_j_pft_small.mean()*-100
-    le_perc_imp_small = le_j_wat_diff_ef_pft_small.mean()/le_j_wat_pft_small.mean()*-100
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     print(
         'Jstrm imp in small basisns is {}%'.format(strm_perc_imp_small)
     )
     print(
-<<<<<<< HEAD
         'p value of {}'.format(strm_j_diff_ef_pft_small_p)
     )
     print(
@@ -1798,10 +1623,6 @@ def main():
     print(
         'p value of {}'.format(le_j_diff_ef_pft_small_p)
     )
-=======
-        'JLE imp in small basins is {}%'.format(le_perc_imp_small)
-    )
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     # okay, now for Figure 5. Let's make the plot of the majority PFT in each
     # different watershed
     wat_pft_cats = []
@@ -1850,19 +1671,11 @@ def main():
     )
     big_improve_wat = watersheds[big_improve_idx]
     # assign them a different color
-<<<<<<< HEAD
     all_wat_colors = ['#73c5eb' for i in range(len(watersheds))]
     not_big_improve_wat = np.zeros(0)
     for w,wat in enumerate(watersheds):
         if wat in big_improve_wat:
             all_wat_colors[w] = 'k'
-=======
-    all_wat_colors = ['k' for i in range(len(watersheds))]
-    not_big_improve_wat = np.zeros(0)
-    for w,wat in enumerate(watersheds):
-        if wat in big_improve_wat:
-            all_wat_colors[w] = '#73c5eb'
->>>>>>> 7585e74 (adding rest of updates from transition back to Discover)
     p_o.scatter(
         g1_wat_diff_ef_pft,
         strm_j_pft,

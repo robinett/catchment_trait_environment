@@ -202,7 +202,6 @@ class process_oco2:
         while curr <= end:
             print(f'start: {start}, end: {end}, curr: {curr}')
             y = curr.year
-            # (re)load this year file on year change
             if y != last_year:
                 fpath = oco2_fname_fmt.format(y)
                 if os.path.exists(fpath):
@@ -220,7 +219,6 @@ class process_oco2:
             day_vals = np.repeat(np.nan, len(self.tiles))
 
             if (ds is not None) and (doys is not None):
-                # calendar doy (1-based)
                 jan1 = datetime.date(y, 1, 1)
                 doy = (curr - jan1).days + 1
                 # is this DOY present in file?
@@ -242,7 +240,6 @@ class process_oco2:
                             ii = int(pix_idx[t, 0])
                             jj = int(pix_idx[t, 1])
                             vals[t] = day_sif[ii, jj]
-                        # drop NaNs; require ≤ 33% missing
                         mask = ~np.isnan(vals)
                         if mask.sum() < (0.67 * len(vals)):
                             day_vals[p] = np.nan
